@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxuwz.leave.mapper.CourseMapper">
+
+    <select id="getBaseCourseList" resultType="com.gxuwz.leave.entity.vo.CourseVo">
+        select c.id,c.gmt_create,c.gmt_modified,c.name,c.semester,c.hours,c.number,t.name teacherName
+        from course c
+                 left join teacher t on c.teacher_id = t.id
+        where c.id =#{id}
+    </select>
+</mapper>

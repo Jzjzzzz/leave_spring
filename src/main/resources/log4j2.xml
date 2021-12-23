@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<!-- 添加 web mvc模块对应包的日志输出 -->
+		<Logger name="org.springframework.web" level="DEBUG" />
+		<Logger name="org.springframework.jdbc" level="DEBUG" />
+		<!--添加 mybatis 持久化模块对应包的日志输出-->
+		<Logger name="com.gxuwz.leave.mapper" level="TRACE" />
+		<Root level="info">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>

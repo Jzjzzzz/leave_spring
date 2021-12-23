@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxuwz.leave.mapper.StudentMapper">
+    <insert id="insertBatch">
+        insert into student (
+        name ,
+        sex ,
+        email ,
+        ruby_class_id
+        ) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.name} ,
+            #{item.sex} ,
+            #{item.email} ,
+            #{item.ruby_class_id}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getBaseStudentList" resultType="com.gxuwz.leave.entity.vo.StudentVo">
+        select s.id,s.gmt_create,s.gmt_modified,s.name,s.sex,s.email,r.name rubyClassName
+        from student s
+                 left join ruby_class r on s.ruby_class_id = r.id
+        where s.id =#{id}
+    </select>
+</mapper>

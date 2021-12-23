@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxuwz.leave.mapper.MenuMapper">
+    <resultMap id="menuResult" type="menu">
+        <id column="menuid" property="menuid"></id>
+        <result column="menuname" property="menuname"></result>
+        <result column="url" property="url"></result>
+        <result column="type" property="type"></result>
+        <result column="status" property="status"></result>
+        <association property="parent" javaType="menu">
+            <id column="p_menuid" property="menuid"></id>
+            <result column="p_menuname" property="menuname"></result>
+            <result column="p_url" property="url"></result>
+            <result column="p_type" property="type"></result>
+            <result column="p_status" property="status"></result>
+        </association>
+    </resultMap>
+    <insert id="save" parameterType="menu">
+      insert into menu(menuid,menuname,menupid,url,type,status)
+        values (#{menuid},#{menuname},#{menupid},#{url},#{type},#{status})
+    </insert>
+    <update id="update">
+        update menu
+        <set>
+            <if test="menupid!=null and menupid!=''">
+                menupid=#{menupid},
+            </if>
+            <if test="menuname!=null and menuname!=''">
+                menuname=#{menuname},
+            </if>
+            <if test="url!=null and url!=''">
+                url=#{url},
+            </if>
+            <if test="type!=null and type!=''">
+                type=#{type},
+            </if>
+            <if test="status!=null and status!=''">
+                status=#{status}
+            </if>
+        </set>
+        where menuid=#{menuid}
+    </update>
+    <delete id="delete" parameterType="string">
+        delete from menu where menuid=#{menuid}
+    </delete>
+    <select id="findByID" parameterType="string" resultMap="menuResult">
+        select t1.menuid,
+               t1.menuname,
+               t1.url,
+               t1.type,
+               t1.status,
+               t2.menuid   as p_menuid,
+               t2.menuname as p_menuname,
+               t2.url as p_url   ,
+               t2.type as p_type,
+               t2.status as p_status
+                from menu t1
+                     left join menu t2
+                          on t1.menupid=t2.menuid
+               where menuid=#{menuid}
+    </select>
+    <select id="find" parameterType="menu" resultMap="menuResult">
+        select t1.menuid,
+               t1.menuname,
+               t1.url,
+               t1.type,
+               t1.status,
+               t2.menuid   as p_menuid,
+               t2.menuname as p_menuname,
+               t2.url as p_url   ,
+               t2.type as p_type,
+               t2.status as p_status
+             from menu t1
+               left join menu t2
+                   on t1.menupid=t2.menuid
+        <where>
+            <if test="menuid!=null and menuid!=''">
+                and t1.menuid=#{menuid}
+            </if>
+            <if test="menupid!=null and menupid!=''">
+                and t1.menupid=#{menupid}
+            </if>
+            <if test="menuname!=null and menuname!=''">
+                and t1.menuname like concat('%',#{menuname},'%')
+            </if>
+            <if test="type!=null and type!=''">
+                and t1.type=#{type}
+            </if>
+            <if test="status!=null and status!=''">
+                and t1.status=#{status}
+            </if>
+        </where>
+        order  by t1.menuid asc
+    </select>
+    <select id="findByParentID" parameterType="string" resultMap="menuResult">
+        select t1.menuid,
+        t1.menuname,
+        t1.url,
+        t1.type,
+        t1.status,
+        t2.menuid   as p_menuid,
+        t2.menuname as p_menuname,
+        t2.url as p_url   ,
+        t2.type as p_type,
+        t2.status as p_status
+         from menu t1
+        left join menu t2
+        on t1.menupid=t2.menuid
+        <where>
+             t1.menupid=#{menupid}
+        </where>
+
+    </select>
+
+</mapper>

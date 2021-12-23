@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+">
+    <!-- 放行js、css、images、html等静态资源配置-begin -->
+    <mvc:default-servlet-handler/>
+    <mvc:resources location="/WEB-INF/views/welcome.html" mapping="welcome.html"/>
+    <!-- 放行js、css、images、html等静态资源配置-end -->
+    <!--扫描Controller-->
+    <context:component-scan base-package="com.gxuwz.leave.web.controller"/>
+    <!--开启MVC注解-->
+    <mvc:annotation-driven/>
+    <!-- 配置视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--视图解析器的前缀 -->
+        <property name="prefix" value="/WEB-INF/views/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!--切面配置类-->
+    <bean id="loginAspect" class="com.gxuwz.leave.aspect.LoginAspect"></bean>
+    <aop:config>
+        <aop:aspect ref="loginAspect">
+            <aop:before method="doBefore" pointcut="execution(public * com.gxuwz.leave.web.controller.admin.*.*(..))"></aop:before>
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 上传文件拦截，设置最大上传文件大小   10M=10*1024*1024(B)=10485760 bytes -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+
+
+</beans>

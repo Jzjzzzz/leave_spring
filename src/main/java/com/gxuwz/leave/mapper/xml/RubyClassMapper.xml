@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxuwz.leave.mapper.RubyClassMapper">
+
+    <select id="getBaseRubyClassList" resultType="com.gxuwz.leave.entity.vo.RubyClassVo">
+        select r.id,r.gmt_create,r.gmt_modified,r.name,r.specialized,r.number,r.grade,c.name collegeName
+        from ruby_class r
+                 left join college c on r.college_id = c.id
+        where r.id =#{id}
+    </select>
+</mapper>

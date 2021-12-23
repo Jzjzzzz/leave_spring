@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxuwz.leave.mapper.UserMapper">
+      <insert id="save" parameterType="user">
+         insert into user(userid,fullname,password,type)
+         values(#{userid},#{fullname},#{password},#{type})
+      </insert>
+    <update id="update" parameterType="user">
+        update user
+        <set>
+            <if test="fullname!=null and fullname!=''">
+                fullname=#{fullname},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="type!=null and type!=''">
+                type=#{type}
+            </if>
+        </set>
+        where userid=#{userid}
+    </update>
+    <delete id="delete" parameterType="string">
+       delete from user where userid=#{userid}
+    </delete>
+    <select id="findByID" parameterType="string" resultType="user">
+        select  * from user where userid=#{userid}
+    </select>
+    <select id="find" parameterType="user" resultType="user">
+        select * from user
+        <where>
+            <if test="userid!=null and userid!=''">
+                and userid=#{userid}
+            </if>
+            <if test="fullname!=null and fullname!=''">
+                and fullname like concat('%',#{fullname},'%')
+            </if>
+            <if test="type!=null and type!=''">
+                and type=#{type}
+            </if>
+        </where>
+    </select>
+    <select id="page" parameterType="user" resultType="user">
+        select * from user
+        <where>
+            <if test="userid!=null and userid!=''">
+                and userid=#{userid}
+            </if>
+            <if test="fullname!=null and fullname!=''">
+                and fullname like concat('%',#{fullname},'%')
+            </if>
+            <if test="type!=null and type!=''">
+                and type=#{type}
+            </if>
+        </where>
+    </select>
+    <select id="count" parameterType="user" resultType="int">
+        select count(userid) as c from user
+        <where>
+            <if test="userid!=null and userid!=''">
+                and userid=#{userid}
+            </if>
+            <if test="fullname!=null and fullname!=''">
+                and fullname like concat('%',#{fullname},'%')
+            </if>
+            <if test="type!=null and type!=''">
+                and type=#{type}
+            </if>
+        </where>
+    </select>
+</mapper>
