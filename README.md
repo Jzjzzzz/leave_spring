@@ -10,8 +10,6 @@
 #### 后端启动流程：
 - 加载下pom
 - 修改resource下的db.properties，把数据库改成自己的
-- 要数据库文件的点个收藏加QQ946232976问我要
-
 
 - 管理员管理页面
 ![image](https://user-images.githubusercontent.com/46312799/147228306-4f80c67e-4a8b-4642-8015-e7a5f93239ea.png)
@@ -51,4 +49,4 @@
 ### 重点！！！！！里面的班级id必须是已有的班级id
 
 #### 个人博客
-Jzjzzzz.icu
+https://www.jzjzzzz.icu/
