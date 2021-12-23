@@ -50,3 +50,5 @@
 
 #### 个人博客
 https://www.jzjzzzz.icu/
+#### 邮箱
+946232976@qq.com
