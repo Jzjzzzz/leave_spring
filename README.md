@@ -47,7 +47,8 @@
 ## excel批量导入学生必须按照我指定格式导入(excel文件后缀xlsx,)
 ![image](https://user-images.githubusercontent.com/46312799/147229118-51b42099-2ec8-49c0-b187-a448a6bf07d1.png)
 ### 重点！！！！！里面的班级id必须是已有的班级id
-
+[excel示例下载](https://fxb-jzj.oss-cn-guangzhou.aliyuncs.com/excel/student.xlsx
+)
 #### 个人博客
 https://www.jzjzzzz.icu/
 #### 邮箱
